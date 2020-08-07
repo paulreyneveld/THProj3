@@ -1,5 +1,4 @@
 // Obtains necessary constants for DOM manipulation and validation. 
-
 const name_input = document.querySelector('#name');
 const job_title = document.querySelector('#title');
 const colorOpts = document.querySelectorAll('#color option')
@@ -22,7 +21,6 @@ const colorMenu = document.querySelector('#colors-js-puns');
 // Selects all T-Shirt color options and hides them until a design choice has been made. 
 // ********** I hard coded the HTML for the first case. **********
 function defaultMenu() {
-	// Extra Credit: Hides the color menu by default. 
 	colorMenu.hidden = true;
 	for (let i = 0; i < colorOpts.length; i += 1) {
 		colorOpts[i].hidden = true;
@@ -42,6 +40,7 @@ function confCost() {
 }
 
 // Validates the name field.
+
 function nameValid() {
 	if (name.value.length > 0) {
 		return true;
@@ -67,18 +66,13 @@ function emailValid () {
 
 // Ensures at least one checkbox has been selected for validation. 
 function regValid() {
-let boxesChecked = 0;
+	let boxesChecked = 0;
 	for (let i = 0; i < checkboxes.length; i += 1) {
 		if (checkboxes[i].checked) {
 			boxesChecked += 1;
 		}
 	}
-	if (boxesChecked == 0) {
-		return false;
-	}
-	else {
-		return true;
-	}
+	return (boxesChecked == 0 ? false : true);
 }
 
 // Validates the credit card number. 
@@ -149,12 +143,7 @@ bitcoin.hidden = true;
 // This handler invokes a condition based on the user's selection of other.
 job_title.addEventListener('change', (e) => {
 	let selected = job_title.value;
-	if (selected == 'other') {
-		document.querySelector('#otherText').hidden = false;
-	}
-	else {
-		document.querySelector('#otherText').hidden = true;	
-	}
+	document.querySelector('#otherText').hidden = (selected == 'other') ? false : true;
 });
 
 // This handler dynamcally manages the t-shirt choices available. 
@@ -162,7 +151,6 @@ designMenu.addEventListener('change', (e) => {
 	let selected = e.target.value;
 	if (selected == 'js puns') {
 		defaultMenu();
-		// Extra credit: displays the color menu. 
 		colorMenu.hidden = false;
 		colorOpts[1].hidden = false;
 		colorOpts[2].hidden = false;
@@ -170,7 +158,6 @@ designMenu.addEventListener('change', (e) => {
 	}
 	else if (selected == 'heart js') {
 		defaultMenu();
-		// Extra credit: displays the color menu. 
 		colorMenu.hidden = false;
 		colorOpts[4].hidden = false;
 		colorOpts[5].hidden = false;
@@ -182,13 +169,11 @@ designMenu.addEventListener('change', (e) => {
 });
 
 // This handler makes sure there are no conference conflicts and outputs the conference cost dynamically.
-// The following code is heavily cribbed fromt the checkbox warm-up exercise.
 document.querySelector('.activities').addEventListener('change', (e) => {
 	runningCostDiv.hidden = false; 
 	let clicked = e.target;
 	let clickedType = clicked.getAttribute('data-day-and-time');
 	for (let i = 0; i < checkboxes.length; i += 1) {
-		
 		let checkboxType = checkboxes[i].getAttribute('data-day-and-time');
 		if (clickedType === checkboxType && clicked !== checkboxes[i] ) {
 			if (clicked.checked) {
@@ -206,7 +191,6 @@ document.querySelector('.activities').addEventListener('change', (e) => {
 // This handler displays appropriate payment information. 
 payMethod.addEventListener('change', (e) => {
 
-	console.log(payMethod.value);
 	if (payMethod.value == 'credit card') {
 		credit.hidden = false;
 		paypal.hidden = true;
@@ -253,7 +237,6 @@ form.addEventListener('submit', (e) => {
 			e.preventDefault();
 			subError('Zipcode invalid. ');
 		}
-		// Extra Credit: This conditional block provides extra info about CVV errors.
 		if (!cvvNumValid()) {
 			e.preventDefault();
 			if (cvvNum.value.length == 0) {
@@ -272,13 +255,11 @@ form.addEventListener('submit', (e) => {
 	}	
 });
 
-// Extra Credit: real-time event listener to determine whether or not e-mail is valid. 
 const emailErrDiv = document.createElement('DIV');
 emailErrDiv.innerHTML = "E-mail address format invalid";
 document.querySelectorAll('label')[1].appendChild(emailErrDiv);
 emailErrDiv.hidden = true;
 email.addEventListener('keyup', (e) => {
-	console.log(e.target.value);
 	const regex = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
 	if (!regex.test(e.target.value)) {
 		emailErrDiv.hidden = false;
